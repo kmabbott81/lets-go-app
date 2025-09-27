@@ -33,10 +33,15 @@ class LetsGoApp {
     }
 
     async createPlan() {
-        const planName = document.getElementById('planName').value || 'Our Activity';
+        const activityDescription = document.getElementById('activityDescription').value;
         const location = document.getElementById('location').value;
         const activityType = document.getElementById('activityType').value;
         const budget = document.getElementById('budget').value;
+
+        if (!activityDescription) {
+            alert('Please describe what you want to do');
+            return;
+        }
 
         if (!location) {
             alert('Please enter a location');
@@ -44,7 +49,7 @@ class LetsGoApp {
         }
 
         const planData = {
-            name: planName,
+            activityDescription: activityDescription,
             location: location,
             activityType: activityType,
             budget: budget
@@ -91,6 +96,7 @@ class LetsGoApp {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    activityDescription: this.currentPlan.activityDescription,
                     location: this.currentPlan.location,
                     activityType: this.currentPlan.activityType,
                     budget: this.currentPlan.budget
@@ -314,6 +320,16 @@ class LetsGoApp {
     createActivityCard(activity) {
         const card = document.createElement('div');
         card.className = 'activity-card';
+
+        const contactInfo = activity.phone || activity.website || activity.address ? `
+            <div class="contact-info">
+                ${activity.phone ? `<div class="contact-item">📞 ${activity.phone}</div>` : ''}
+                ${activity.website ? `<div class="contact-item">🌐 <a href="http://${activity.website}" target="_blank">${activity.website}</a></div>` : ''}
+                ${activity.address ? `<div class="contact-item">📍 ${activity.address}</div>` : ''}
+                ${activity.hours ? `<div class="contact-item">🕒 ${activity.hours}</div>` : ''}
+            </div>
+        ` : '';
+
         card.innerHTML = `
             <h3>${activity.name}</h3>
             <div class="category">${activity.category}</div>
@@ -322,6 +338,7 @@ class LetsGoApp {
                 <span class="rating">${activity.rating}</span>
                 <span class="price">${activity.price}</span>
             </div>
+            ${contactInfo}
         `;
         return card;
     }
@@ -680,7 +697,7 @@ class LetsGoApp {
         this.planId = null;
 
         // Clear form inputs
-        document.getElementById('planName').value = '';
+        document.getElementById('activityDescription').value = '';
         document.getElementById('location').value = '';
         document.getElementById('activityType').value = 'any';
         document.getElementById('budget').value = 'low';

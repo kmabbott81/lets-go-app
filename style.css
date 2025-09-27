@@ -177,6 +177,27 @@ input:focus, select:focus {
     font-weight: 600;
 }
 
+.contact-info {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    font-size: 0.9rem;
+}
+
+.contact-item {
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+.contact-item a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    text-decoration: underline;
+}
+
 .activity-card.spinning {
     animation: spin 2s linear infinite;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
