@@ -111,8 +111,57 @@ class LetsGoApp {
     }
 
     generateMockActivities() {
-        // Mock activity data - fallback when API fails
-        const allActivities = [
+        // Enhanced mock data with location-aware suggestions
+        let allActivities = [];
+
+        // Check if location suggests boat/cruise activities
+        const location = this.currentPlan?.location?.toLowerCase() || '';
+        if (location.includes('cruise') || location.includes('boat') || location.includes('booze')) {
+            allActivities = [
+                {
+                    name: "Harbor Booze Cruise",
+                    category: "Entertainment",
+                    description: "3-hour party cruise with open bar, live DJ, and dancing",
+                    rating: "4.4★",
+                    price: "$$$",
+                    type: "entertainment"
+                },
+                {
+                    name: "Sunset Cocktail Cruise",
+                    category: "Nightlife",
+                    description: "Scenic evening cruise with craft cocktails and harbor views",
+                    rating: "4.6★",
+                    price: "$$",
+                    type: "nightlife"
+                },
+                {
+                    name: "Party Boat Experience",
+                    category: "Entertainment",
+                    description: "All-inclusive floating party with drinks, music, and city skyline views",
+                    rating: "4.3★",
+                    price: "$$$",
+                    type: "entertainment"
+                },
+                {
+                    name: "Yacht Club Happy Hour",
+                    category: "Nightlife",
+                    description: "Upscale waterfront venue with signature cocktails and dock views",
+                    rating: "4.5★",
+                    price: "$$",
+                    type: "nightlife"
+                },
+                {
+                    name: "Harbor Tour & Drinks",
+                    category: "Entertainment",
+                    description: "Sightseeing cruise with bottomless mimosas and brunch buffet",
+                    rating: "4.2★",
+                    price: "$$",
+                    type: "entertainment"
+                }
+            ];
+        } else {
+            // Default activities for other locations
+            allActivities = [
             {
                 name: "The Rooftop Bar",
                 category: "Nightlife",
@@ -177,7 +226,8 @@ class LetsGoApp {
                 price: "$",
                 type: "food"
             }
-        ];
+            ];
+        }
 
         // Filter activities based on user preferences
         let filteredActivities = allActivities;
