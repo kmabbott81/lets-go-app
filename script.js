@@ -514,15 +514,34 @@ class LetsGoApp {
         const planId = urlParams.get('plan');
 
         if (planId) {
-            // In a real app, this would load the plan from a database
-            // For demo purposes, we'll simulate a friend joining
+            // Load the actual plan from server
             this.planId = planId;
+            this.loadRealPlan();
+        }
+    }
+
+    async loadRealPlan() {
+        try {
+            const response = await fetch(`${this.apiBase}/api/plans/${this.planId}`);
+            const result = await response.json();
+
+            if (result.plan) {
+                this.currentPlan = result.plan;
+                await this.generateActivities();
+                this.showScreen('activitySelection');
+                this.displayCurrentActivity();
+            } else {
+                // Fallback for demo
+                this.simulateFriendView();
+            }
+        } catch (error) {
+            console.error('Error loading plan:', error);
             this.simulateFriendView();
         }
     }
 
     simulateFriendView() {
-        // Simulate friend joining an existing plan
+        // Fallback: Simulate friend joining an existing plan
         this.currentPlan = {
             name: 'Shared Activity Plan',
             location: 'Current City',
@@ -534,12 +553,8 @@ class LetsGoApp {
         this.showScreen('activitySelection');
         this.displayCurrentActivity();
 
-        // Add some demo friends
-        this.friends = [
-            { name: 'Alex', hasVoted: true, votes: this.generateRandomVotes() },
-            { name: 'Jordan', hasVoted: false, votes: [] },
-            { name: 'Sam', hasVoted: true, votes: this.generateRandomVotes() }
-        ];
+        // No simulated friends for real usage
+        this.friends = [];
     }
 
     generateRandomVotes() {
