@@ -82,7 +82,9 @@ class LetsGoApp {
     }
 
     async generateActivities() {
+        console.log('Generating activities for:', this.currentPlan.location);
         try {
+            console.log('Calling API...');
             const response = await fetch(`${this.apiBase}/api/activities/generate`, {
                 method: 'POST',
                 headers: {
@@ -104,9 +106,11 @@ class LetsGoApp {
             }
         } catch (error) {
             console.error('Error fetching activities:', error);
+            console.log('Falling back to mock data...');
         }
 
         // Fallback to mock data
+        console.log('Using fallback mock data');
         this.generateMockActivities();
     }
 
@@ -116,7 +120,13 @@ class LetsGoApp {
 
         // Check if location suggests boat/cruise activities
         const location = this.currentPlan?.location?.toLowerCase() || '';
+        console.log('Location check:', location);
+        console.log('Contains cruise:', location.includes('cruise'));
+        console.log('Contains boat:', location.includes('boat'));
+        console.log('Contains booze:', location.includes('booze'));
+
         if (location.includes('cruise') || location.includes('boat') || location.includes('booze')) {
+            console.log('Using cruise activities!');
             allActivities = [
                 {
                     name: "Harbor Booze Cruise",
