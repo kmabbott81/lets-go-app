@@ -118,15 +118,23 @@ class LetsGoApp {
         // Enhanced mock data with location-aware suggestions
         let allActivities = [];
 
-        // Check if location suggests boat/cruise activities
+        // Check if user wants boat/cruise activities based on plan name or activity type
         const location = this.currentPlan?.location?.toLowerCase() || '';
-        console.log('Location check:', location);
-        console.log('Contains cruise:', location.includes('cruise'));
-        console.log('Contains boat:', location.includes('boat'));
-        console.log('Contains booze:', location.includes('booze'));
+        const planName = this.currentPlan?.name?.toLowerCase() || '';
+        const activityType = this.currentPlan?.activityType || '';
 
-        if (location.includes('cruise') || location.includes('boat') || location.includes('booze')) {
-            console.log('Using cruise activities!');
+        console.log('Location:', location);
+        console.log('Plan name:', planName);
+        console.log('Activity type:', activityType);
+
+        // Look for cruise/boat keywords in plan name or if it's a waterfront location
+        const wantsCruise = planName.includes('cruise') || planName.includes('boat') || planName.includes('booze') ||
+                           location.includes('harbor') || location.includes('marina') || location.includes('waterfront') ||
+                           location.includes('seattle') || location.includes('san francisco') || location.includes('miami') ||
+                           location.includes('new york') || location.includes('chicago') || location.includes('boston');
+
+        if (wantsCruise) {
+            console.log('Using cruise activities for waterfront location!');
             allActivities = [
                 {
                     name: "Harbor Booze Cruise",

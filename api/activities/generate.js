@@ -22,7 +22,10 @@ module.exports = async function handler(req, res) {
 
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-        const prompt = `Generate 8 real, specific activity suggestions for ${location}.
+        const prompt = `Generate 8 real, specific activity suggestions based on: "${location}".
+
+        IMPORTANT: If the location contains activity keywords (like "booze cruise", "wine tasting", "hiking", etc.),
+        treat it as an activity request and find relevant venues/businesses for that activity type.
 
         Requirements:
         - Activity type preference: ${activityType === 'any' ? 'any type of activity' : activityType}
@@ -30,7 +33,7 @@ module.exports = async function handler(req, res) {
         - Include actual business names, venues, or specific locations when possible
         - Provide realistic ratings (4.0-4.8 stars)
         - Include brief descriptions that sound appealing and spontaneous
-        - If location mentions specific activities (like "booze cruise"), prioritize those types
+        - If user typed activity names in location field, find venues for those activities
 
         Return ONLY a valid JSON array with this exact format:
         [
