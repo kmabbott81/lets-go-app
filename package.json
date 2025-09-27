@@ -2,6 +2,7 @@
   "name": "lets-go-app",
   "version": "1.0.0",
   "description": "Automatic activity planner - Swipe, tally, go",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
