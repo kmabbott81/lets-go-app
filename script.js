@@ -22,6 +22,7 @@ class LetsGoApp {
         document.getElementById('passBtn').addEventListener('click', () => this.voteOnActivity(false));
         document.getElementById('likeBtn').addEventListener('click', () => this.voteOnActivity(true));
         document.getElementById('spinWheel').addEventListener('click', () => this.spinForDecision());
+        document.getElementById('getMoreOptions').addEventListener('click', () => this.generateMoreActivities());
         document.getElementById('inviteFriends').addEventListener('click', () => this.showFriendsScreen());
         document.getElementById('copyLink').addEventListener('click', () => this.copyPlanLink());
         document.getElementById('viewResults').addEventListener('click', () => this.showResults());
@@ -210,13 +211,36 @@ class LetsGoApp {
         cardStack.innerHTML = '';
 
         if (this.currentActivityIndex >= this.activities.length) {
-            this.showFriendsScreen();
+            // Generate more activities when we run out
+            this.generateMoreActivities();
             return;
         }
 
         const activity = this.activities[this.currentActivityIndex];
         const card = this.createActivityCard(activity);
         cardStack.appendChild(card);
+    }
+
+    async generateMoreActivities() {
+        const cardStack = document.getElementById('activityCards');
+        cardStack.innerHTML = `
+            <div class="activity-card">
+                <h3>🔄 Finding more options...</h3>
+                <p>Searching for more activities you might like!</p>
+            </div>
+        `;
+
+        try {
+            // Generate fresh activities
+            await this.generateActivities();
+            this.displayCurrentActivity();
+        } catch (error) {
+            console.error('Error generating more activities:', error);
+            // Fallback: recycle existing activities with different order
+            this.activities = this.shuffleArray([...this.activities]);
+            this.currentActivityIndex = 0;
+            this.displayCurrentActivity();
+        }
     }
 
     createActivityCard(activity) {
