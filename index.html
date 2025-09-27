@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Go - Activity Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Let's Go</h1>
+            <p class="tagline">Swipe, tally, go</p>
+        </header>
+
+        <main>
+            <div id="planCreation" class="screen active">
+                <h2>Create Your Plan</h2>
+
+                <div class="form-group">
+                    <label for="planName">Plan Name</label>
+                    <input type="text" id="planName" placeholder="Tonight's adventure">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" placeholder="Enter your city or area">
+                </div>
+
+                <div class="form-group">
+                    <label for="activityType">Activity Type</label>
+                    <select id="activityType">
+                        <option value="any">Any Activity</option>
+                        <option value="food">Food & Dining</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="outdoors">Outdoor Activities</option>
+                        <option value="nightlife">Nightlife</option>
+                        <option value="culture">Arts & Culture</option>
+                        <option value="sports">Sports & Fitness</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="budget">Budget Range</label>
+                    <select id="budget">
+                        <option value="low">$ - Budget Friendly</option>
+                        <option value="medium">$$ - Moderate</option>
+                        <option value="high">$$$ - Premium</option>
+                        <option value="any">Any Budget</option>
+                    </select>
+                </div>
+
+                <button id="createPlan" class="primary-btn">Find Activities</button>
+            </div>
+
+            <div id="activitySelection" class="screen">
+                <h2>Swipe on Activities</h2>
+                <div id="activityCards" class="card-stack">
+                    <!-- Activity cards will be dynamically generated -->
+                </div>
+                <div class="swipe-controls">
+                    <button id="passBtn" class="swipe-btn pass">👎 Pass</button>
+                    <button id="spinWheel" class="swipe-btn spin">🎲 Spin</button>
+                    <button id="likeBtn" class="swipe-btn like">👍 Like</button>
+                </div>
+                <button id="inviteFriends" class="secondary-btn">Invite Friends</button>
+            </div>
+
+            <div id="friendsVoting" class="screen">
+                <h2>Friends Voting</h2>
+                <div id="shareLink" class="share-section">
+                    <p>Share this link with your friends:</p>
+                    <div class="share-link">
+                        <input type="text" id="planLink" readonly>
+                        <button id="copyLink">Copy</button>
+                    </div>
+                </div>
+                <div id="votingStatus" class="voting-status">
+                    <h3>Voting Progress</h3>
+                    <div id="friendsList"></div>
+                </div>
+                <button id="viewResults" class="primary-btn">View Results</button>
+            </div>
+
+            <div id="results" class="screen">
+                <h2>Let's Go!</h2>
+                <div id="winningActivity" class="winner">
+                    <!-- Winning activity will be displayed here -->
+                </div>
+                <div id="otherActivities" class="other-options">
+                    <h3>Other Popular Options</h3>
+                    <!-- Other ranked activities -->
+                </div>
+                <button id="startOver" class="secondary-btn">Plan Another Activity</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
